@@ -13,17 +13,15 @@ class Solution {
         TreeNode curr = root;
 
         while (curr != null) {
-            if ((curr.val > p.val && curr.val < q.val) || (curr.val > q.val && curr.val < p.val))
-                return curr;
-            else if (curr.val > p.val && curr.val > q.val)
+           
+             if (curr.val > p.val && curr.val > q.val)
                 curr = curr.left;
             else if (curr.val < p.val && curr.val < q.val)
                 curr = curr.right;
-            else if (curr == p)
-                return curr;
+            
             else
-                return q;
+                return curr;
         }
-        return root;
+        return curr;
     }
 }
