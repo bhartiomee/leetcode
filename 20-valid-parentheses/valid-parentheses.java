@@ -7,13 +7,18 @@ class Solution {
 
             if (ch == '(' || ch == '{' || ch == '[')
                 stk.push(ch);
-            else if (!stk.isEmpty() && ch == ')' && stk.peek() == '(')
-                stk.pop();
-            else if (!stk.isEmpty() && ch == ']' && stk.peek() == '[')
-                stk.pop();
-            else if (!stk.isEmpty() && ch == '}' && stk.peek() == '{')
-                stk.pop();
-            else return false;   
+            else {
+                if (stk.isEmpty())
+                    return false;
+                if ((ch == ')' && stk.peek() == '(') 
+                        || (ch == ']' && stk.peek() == '[')
+                        || (ch == '}' && stk.peek() == '{'))
+                    stk.pop();
+                else{
+                    return false;
+                }    
+            }
+
         }
         return stk.isEmpty();
     }
