@@ -3,24 +3,29 @@ class Solution {
         String ans = "";
 
         for (int i = 0; i < s.length(); i++) {
-            for (int j = 0; j < s.length(); j++) {
-                int len = j - i + 1;
-                if (isPalindrome(i, j, s) && ans.length() < len) {
-                    ans = s.substring(i, j + 1);
-
-                }
+            int st = i, end = i;
+            while (st >= 0 && end < s.length() 
+                    && s.charAt(st) == s.charAt(end)) {
+                st--;
+                end++;
             }
+
+            String tmp = s.substring(st + 1, end);
+            if (tmp.length() > ans.length())
+                ans = tmp;
+
+             st = i; end = i + 1;
+            while (st >= 0 && end < s.length() && 
+                    s.charAt(st) == s.charAt(end)) {
+                st--;
+                end++;
+            }
+            tmp = s.substring(st + 1, end);
+            if (tmp.length() > ans.length())
+                ans = tmp;
         }
+
         return ans;
     }
 
-    public boolean isPalindrome(int i, int j, String s) {
-        while (i < j) {
-            if (s.charAt(i) != s.charAt(j))
-                return false;
-            i++;
-            j--;
-        }
-        return true;
-    }
 }
