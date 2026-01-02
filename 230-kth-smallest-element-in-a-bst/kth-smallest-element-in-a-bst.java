@@ -14,22 +14,23 @@
  * }
  */
 class Solution {
-    PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
-
+    // PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
+    int cnt=0;
+    int ans=0;
     public int kthSmallest(TreeNode root, int k) {
 
         traverse(root,k);
-        return pq.poll();
+        return ans;
     }
 
     public void traverse(TreeNode root,int k){
         if(root==null)return;
-        pq.offer(root.val);
-
-        while(pq.size()>k){
-            pq.poll();
-        }
         traverse(root.left,k);
+
+        cnt++;
+        if(cnt==k){
+            ans=root.val;
+        } 
         traverse(root.right,k);
     }
 }
