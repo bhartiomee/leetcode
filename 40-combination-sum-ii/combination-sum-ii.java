@@ -3,28 +3,27 @@ class Solution {
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
-        traverse(candidates, target, 0, new ArrayList<>());
+        backtrack(candidates, target, 0, new ArrayList<>());
         return ans;
     }
 
-    public void traverse(int[] candidates, int target, int idx, List<Integer> tmp) {
-
+     private void backtrack(int[] arr, int target, int start, List<Integer> temp) {
         if (target == 0) {
-            ans.add(new ArrayList(tmp));
+            ans.add(new ArrayList<>(temp));
             return;
         }
-        if (target < 0 || idx == candidates.length)
-            return;
 
-        tmp.add(candidates[idx]);
-        traverse(candidates, target - candidates[idx], idx + 1, tmp);
-        tmp.remove(tmp.get(tmp.size() - 1));
-        for (int i = idx + 1; i < candidates.length; i++) {
-            if (candidates[i] != candidates[idx]) {
-                traverse(candidates, target, i,tmp);
-                break;
-            }
+        for (int i = start; i < arr.length; i++) {
+
+            // Skip duplicates
+            if (i > start && arr[i] == arr[i - 1]) continue;
+
+            // Pruning
+            if (arr[i] > target) break;
+
+            temp.add(arr[i]);
+            backtrack(arr, target - arr[i], i + 1, temp);
+            temp.remove(temp.size() - 1);
         }
-
     }
 }
