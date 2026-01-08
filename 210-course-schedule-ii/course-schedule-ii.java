@@ -1,25 +1,28 @@
 class Solution {
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
+    public int[] findOrder(int n, int[][] prerequisites) {
+        int[] indegree=new int[n];
         List<List<Integer>> adj=new ArrayList<>();
-        Queue<Integer> q=new LinkedList<>();
-        int[] indegree=new int[numCourses];
-        int[] ans=new int[numCourses];
 
-        
-        for(int i=0;i<numCourses;i++){
+        for(int i=0;i<n;i++){
             adj.add(new ArrayList<>());
         }
 
-        for(int []it:prerequisites){
-            adj.get(it[1]).add(it[0]);
-            indegree[it[0]]++;
+        for(int i=0;i<prerequisites.length;i++){
+            int u=prerequisites[i][0];
+            int v=prerequisites[i][1];
+            adj.get(v).add(u);
         }
 
-        for(int i=0;i<numCourses;i++){
-            if(indegree[i]==0)q.offer(i);
-        }   
-
+        for(int i=0;i<n;i++){
+            for(int it:adj.get(i))indegree[it]++;
+        }
+        Queue<Integer> q=new LinkedList<>();
+        int[] ans=new int[n];
         int idx=0;
+
+        for(int i=0;i<n;i++){
+            if(indegree[i]==0)q.offer(i);
+        }
 
         while(!q.isEmpty()){
             int node=q.poll();
@@ -31,7 +34,7 @@ class Solution {
             }
         }
 
-        return idx==numCourses?ans:new int[]{};
-    
+        return idx==n?ans:new int[]{};
+        
     }
 }
