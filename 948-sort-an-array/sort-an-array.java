@@ -1,48 +1,37 @@
 class Solution {
     public int[] sortArray(int[] nums) {
-        mergeSort(nums, 0, nums.length - 1);
+        quickSort(nums, 0, nums.length - 1);
         return nums;
     }
 
-    private void mergeSort(int[] nums, int left, int right) {
-        int mid;
-        if (left < right) {
-            mid = left + (right - left) / 2;
-            mergeSort(nums, left, mid);
-            mergeSort(nums, mid + 1, right);
-            merge(nums, left, mid, right);
-        }
+    private void quickSort(int[] nums, int low, int high) {
+        if (low < high) {
+            int pi = partition(nums, low, high);
 
+            quickSort(nums, low, pi-1);
+            quickSort(nums, pi + 1, high);
+        }
     }
 
-    private void merge(int[] nums, int left, int mid, int right) {
-        int l = mid - left + 1;
-        int r = right - mid;
+    private int partition(int[] nums, int low, int high) {
+        int rand = low + new Random().nextInt(high - low + 1);
+    swap(nums, rand, high);
+        int pivot = nums[high];
+        int i = low - 1;
 
-        int[] la = new int[l];
-        int[] ra = new int[r];
-
-        for (int i = 0; i < l; i++) {
-            la[i] = nums[left + i];
-        }
-        for (int i = 0; i < r; i++) {
-            ra[i] = nums[mid + i + 1];
-        }
-
-        int li = 0, ri = 0, k = left;
-
-        while (li < l && ri < r) {
-            if (la[li] <= ra[ri]) {
-                nums[k++] = la[li++];
-            } else {
-                nums[k++] = ra[ri++];
+        for (int j = low; j < high; j++) {
+            if (nums[j] < pivot) {
+                i++;
+                swap(nums, i, j);
             }
         }
+        swap(nums, i + 1, high);
+        return i+1;
+    }
 
-        while (li < l)
-            nums[k++] = la[li++];
-        while (ri < r)
-            nums[k++] = ra[ri++];
-
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 }
