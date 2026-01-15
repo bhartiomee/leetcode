@@ -6,8 +6,7 @@ class Solution {
             pq.offer(stone);
         }
 
-        Iterator value = pq.iterator();
-        while (pq.size() > 1 && value.hasNext()) {
+        while (pq.size() > 1) {
             int x = pq.poll();
             int y = pq.poll();
 
