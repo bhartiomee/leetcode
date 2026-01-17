@@ -10,17 +10,16 @@ class Solution {
 
         Arrays.sort(cars,(a,b)->b[0]-a[0]);
 
-        int fleet=0;
         double maxTime=0.0;
+        int fleet=0;
 
-        for(int i=0;i<n;i++){
+        for(int i=0;i<n;i++){   
             double time=(double)(target-cars[i][0])/cars[i][1];
             if(time>maxTime){
-                fleet++;
                 maxTime=time;
+                fleet++;
             }
         }
-
         return fleet;
     }
 }
