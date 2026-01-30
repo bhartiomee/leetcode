@@ -3,27 +3,25 @@ class Solution {
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
-        backtrack(candidates, target, 0, new ArrayList<>());
+        helper(candidates, 0, target, new ArrayList<>());
         return ans;
     }
 
-     private void backtrack(int[] arr, int target, int start, List<Integer> temp) {
+    public void helper(int[] candidates, int idx, int target, List<Integer> tmp) {
         if (target == 0) {
-            ans.add(new ArrayList<>(temp));
+            ans.add(new ArrayList(tmp));
             return;
         }
+        if (idx >= candidates.length || target < 0)
+            return;
 
-        for (int i = start; i < arr.length; i++) {
+        tmp.add(candidates[idx]);
+        helper(candidates, idx + 1, target - candidates[idx], tmp);
+        tmp.remove(tmp.size() - 1);
 
-            // Skip duplicates
-            if (i > start && arr[i] == arr[i - 1]) continue;
-
-            // Pruning
-            if (arr[i] > target) break;
-
-            temp.add(arr[i]);
-            backtrack(arr, target - arr[i], i + 1, temp);
-            temp.remove(temp.size() - 1);
-        }
+        while (idx + 1 < candidates.length 
+                                        && candidates[idx] == candidates[idx + 1])
+            idx++;
+        helper(candidates, idx + 1, target, tmp);
     }
 }
