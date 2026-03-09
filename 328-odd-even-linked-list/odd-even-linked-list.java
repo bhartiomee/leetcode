@@ -15,18 +15,14 @@ class Solution {
         ListNode odd = head;
         ListNode evenHead = head.next;
         ListNode even = head.next;
-        int i = 1;
 
         while (even != null && even.next != null) {
 
-            if (i % 2 != 0) {
-                odd.next = even.next;
-                odd = odd.next;
-            } else {
-                even.next = odd.next;
-                even = even.next;
-            }
-            i++;
+            odd.next = even.next;
+            odd = odd.next;
+
+            even.next = odd.next;
+            even = even.next;
 
         }
         odd.next = evenHead;
